@@ -1,7 +1,6 @@
-// Written in 2015 by Jack Galilee. Convenient rights reserved.
 // Use of this source code is governed by the MIT-style
 // license that can be found in the LICENSE file.
-package fractran
+package lang
 
 import (
 	"errors"
@@ -31,7 +30,7 @@ type Program struct {
 }
 
 // Returns a new FRACTRAN Program with a defined bound.
-func NewBoundProgram(instrs []*big.Rat, n int64, b float64) (*Program, error) {
+func NewBoundProgram(instrs []*big.Rat, b float64) (*Program, error) {
 	// Validate the bound is only a positive integer.
 	if math.IsInf(b, -1) && (b > 0) {
 		return nil, fmt.Errorf("bound can't be %v", b)
@@ -42,12 +41,12 @@ func NewBoundProgram(instrs []*big.Rat, n int64, b float64) (*Program, error) {
 			return nil, fmt.Errorf("%v is a non-positive fraction", i)
 		}
 	}
-	return &Program{Last: -1, Bound: b, n: big.NewRat(n, 1), instrs: instrs}, nil
+	return &Program{Last: -1, Bound: b, instrs: instrs}, nil
 }
 
 // Returns a new FRACTRAN program with an infinite maximum bound.
-func NewProgram(instrs []*big.Rat, n int64) (*Program, error) {
-	return NewBoundProgram(instrs, n, math.Inf(1))
+func NewProgram(instrs []*big.Rat) (*Program, error) {
+	return NewBoundProgram(instrs, math.Inf(1))
 }
 
 // Steps the program as defined by the rules of FRACTRAN:
@@ -80,7 +79,11 @@ func (p *Program) Step() (*big.Int, error) {
 
 // Continues to step the FRACTRAN program and writes the result to the output
 // writer.
-func (p *Program) Run(out io.Writer) error {
+func (p *Program) Run(out io.Writer, n int64) error {
+	if n <= 0 {
+		return fmt.Errorf("n must be positive")
+	}
+	p.n = big.NewRat(n, 1)
 	for p.Bound > float64(p.Steps) {
 		if n, err := p.Step(); Halt != err {
 			io.WriteString(out, fmt.Sprintf("%v\n", n))

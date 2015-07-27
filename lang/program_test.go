@@ -1,4 +1,7 @@
-package fractran
+// Written in 2015 by Jack Galilee. Convenient rights reserved.
+// Use of this source code is governed by the MIT-style
+// license that can be found in the LICENSE file.
+package lang
 
 import (
 	"math/big"
@@ -22,11 +25,11 @@ func ExampleRun() {
 		big.NewRat(15, 2),
 		big.NewRat(55, 1),
 	}
-	prg, err := NewBoundProgram(inst, 2, 11)
+	prg, err := NewBoundProgram(inst, 11)
 	if nil != err {
 		panic(err)
 	}
-	prg.Run(os.Stdout)
+	prg.Run(os.Stdout, 2)
 	// Output:
 	// 2
 	// 15

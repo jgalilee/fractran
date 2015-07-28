@@ -1,5 +1,7 @@
 # FRACTRAN
 
+[![GoDoc](https://godoc.org/github.com/jgalilee/fractran/lang?status.svg)](https://godoc.org/github.com/jgalilee/fractran/lang)
+
 Implementation of John Conway's esoteric FRACTRAN programming language in Go.
 
 # Installation

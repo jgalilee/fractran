@@ -1,6 +1,7 @@
 # FRACTRAN
 
 [![GoDoc](https://godoc.org/github.com/jgalilee/fractran?status.svg)](https://godoc.org/github.com/jgalilee/fractran)
+[![Go](https://github.com/jgalilee/fractran/actions/workflows/go.yml/badge.svg)](https://github.com/jgalilee/fractran/actions/workflows/go.yml)
 
 Implementation of John Conway's esoteric FRACTRAN programming language in Go.
 
